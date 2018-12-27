@@ -20,9 +20,25 @@ namespace Brevis
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly Scene _scene;
         public MainWindow()
         {
             InitializeComponent();
+            var bitmap = new WriteableBitmap(256, 256, 96, 96, PixelFormats.Bgr32, null);
+            this.SceneImage.Source = bitmap;
+            this._scene = new Scene(bitmap, 0);
+
+            // TODO: remove me, this is temporary
+            DrawLineOnScene();
+        }
+
+        private void DrawLineOnScene()
+        {
+            const int white = 16777215;
+            this._scene.StartDrawing();
+            for (var i = 0; i < 10; i++)
+                this._scene.SetPixel(i, i, white);
+            this._scene.EndDrawing();
         }
     }
 }
