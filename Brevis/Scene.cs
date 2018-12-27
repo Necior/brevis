@@ -47,7 +47,7 @@ namespace Brevis
             this._bitmap.Unlock();
         }
 
-        internal void SetPixel(int row, int column, int color)
+        public void SetPixel(int row, int column, int color)
         {
             if(this.IsOutside(row, column))
                 return;
