@@ -18,5 +18,10 @@ namespace Brevis
             this._y = y;
             this._z = z;
         }
+
+        public Vertex2D OrthogonalProjection()
+        {
+            return new Vertex2D(this._x, this._y);
+        }
     }
 }

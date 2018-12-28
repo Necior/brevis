@@ -17,5 +17,10 @@ namespace Brevis
             this._b = b;
             this._c = c;
         }
+
+        public Triangle2D OrthogonalProjection()
+        {
+            return new Triangle2D(this._a.OrthogonalProjection(), this._b.OrthogonalProjection(), this._c.OrthogonalProjection());
+        }
     }
 }
