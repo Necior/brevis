@@ -8,10 +8,10 @@ namespace Brevis
 {
     internal class Triangle
     {
-        private readonly Vertex _a;
-        private readonly Vertex _b;
-        private readonly Vertex _c;
-        internal Triangle(Vertex a, Vertex b, Vertex c)
+        private readonly Vertex3D _a;
+        private readonly Vertex3D _b;
+        private readonly Vertex3D _c;
+        internal Triangle(Vertex3D a, Vertex3D b, Vertex3D c)
         {
             this._a = a;
             this._b = b;
