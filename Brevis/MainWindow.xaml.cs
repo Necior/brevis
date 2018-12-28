@@ -31,10 +31,8 @@ namespace Brevis
 
         private void DrawLineOnScene()
         {
-            const int white = 16777215;
             this._scene.StartDrawing();
-            for (var i = 0; i < 10; i++)
-                this._scene.SetPixel(i, i, white);
+            new Segment(0, 0, 10, 10).Draw(this._scene);
             this._scene.EndDrawing();
         }
     }
