@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,14 @@ namespace Brevis
         private void DrawLineOnScene()
         {
             this._scene.StartDrawing();
-            new Triangle2D(new Vertex2D(5, 5), new Vertex2D(15, 5), new Vertex2D(5, 15)).Draw(this._scene);
+            /*
+             * First command line argument must be a path to the OFF file.
+             */
+            var off = new OFFParser(Environment.GetCommandLineArgs()[1]);
+            foreach (var triangle3D in off.Triangles)
+            {
+                triangle3D.OrthogonalProjection().Draw(this._scene);
+            }
             this._scene.EndDrawing();
         }
     }

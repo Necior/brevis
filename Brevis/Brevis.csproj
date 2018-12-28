@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="IDrawable.cs" />
     <Compile Include="IHasSetPixel.cs" />
+    <Compile Include="OFFParser.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Segment.cs" />
     <Compile Include="Triangle2D.cs" />
