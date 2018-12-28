@@ -58,7 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="IHasSetPixel.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="Triangle.cs" />
+    <Compile Include="Triangle3D.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Vertex3D.cs" />
     <Page Include="MainWindow.xaml">

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Brevis
 {
-    internal class Triangle
+    internal class Triangle3D
     {
         private readonly Vertex3D _a;
         private readonly Vertex3D _b;
         private readonly Vertex3D _c;
-        internal Triangle(Vertex3D a, Vertex3D b, Vertex3D c)
+        internal Triangle3D(Vertex3D a, Vertex3D b, Vertex3D c)
         {
             this._a = a;
             this._b = b;
