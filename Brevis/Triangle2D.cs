@@ -18,5 +18,17 @@ namespace Brevis
             this._b = b;
             this._c = c;
         }
+
+        public void Draw(IHasSetPixel canvas)
+        {
+            this.DrawWireframe(canvas);
+        }
+
+        private void DrawWireframe(IHasSetPixel canvas)
+        {
+            new Segment(this._a, this._b).Draw(canvas);
+            new Segment(this._b, this._c).Draw(canvas);
+            new Segment(this._c, this._a).Draw(canvas);
+        }
     }
 }

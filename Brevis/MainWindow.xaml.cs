@@ -32,7 +32,7 @@ namespace Brevis
         private void DrawLineOnScene()
         {
             this._scene.StartDrawing();
-            new Segment(0, 0, 10, 10).Draw(this._scene);
+            new Triangle2D(new Vertex2D(5, 5), new Vertex2D(15, 5), new Vertex2D(5, 15)).Draw(this._scene);
             this._scene.EndDrawing();
         }
     }

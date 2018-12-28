@@ -16,5 +16,8 @@ namespace Brevis
             this.x_ = x;
             this.y_ = y;
         }
+
+        public double X => x_;
+        public double Y => y_;
     }
 }

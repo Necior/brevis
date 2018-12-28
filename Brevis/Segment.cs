@@ -20,6 +20,17 @@ namespace Brevis
             this.y2 = y2;
         }
 
+        public Segment(Vertex2D a, Vertex2D b)
+        {
+            /*
+             * TODO: what about double <-> int conversion?
+             */
+            this.x1 = (int)a.X;
+            this.y1 = (int)a.Y;
+            this.x2 = (int)b.X;
+            this.y2 = (int)b.Y;
+        }
+
         public void Draw(IHasSetPixel canvas)
         {
             this.DrawBresenham(canvas);
