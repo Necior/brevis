@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace Brevis
 {
-    internal class Scene : IDrawable
+    internal class Scene : IHasSetPixel
     {
         private readonly WriteableBitmap _bitmap;
         private readonly int _color;

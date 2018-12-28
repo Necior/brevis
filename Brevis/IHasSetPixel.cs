@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Brevis
 {
-    internal interface IDrawable
+    internal interface IHasSetPixel
     {
         void SetPixel(int row, int column, int color);
     }
