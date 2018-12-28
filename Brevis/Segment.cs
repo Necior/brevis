@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Brevis
 {
-    public class Segment
+    public class Segment : IDrawable
     {
         internal int x1;
         internal int y1;

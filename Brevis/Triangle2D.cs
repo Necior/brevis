@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Brevis
 {
-    public class Triangle2D
+    public class Triangle2D : IDrawable
     {
         private readonly Vertex2D _a;
         private readonly Vertex2D _b;
