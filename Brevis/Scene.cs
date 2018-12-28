@@ -8,17 +8,17 @@ using System.Windows.Media.Imaging;
 
 namespace Brevis
 {
-    internal class Scene : IHasSetPixel
+    public class Scene : IHasSetPixel
     {
         private readonly WriteableBitmap _bitmap;
         private readonly int _color;
-        internal Scene(WriteableBitmap bitmap, int color)
+        public Scene(WriteableBitmap bitmap, int color)
         {
             this._bitmap = bitmap;
             this._color = color;
         }
 
-        internal void StartDrawing()
+        public void StartDrawing()
         {
             this._bitmap.Lock();
             this.Clear();
@@ -41,7 +41,7 @@ namespace Brevis
             }
         }
 
-        internal void EndDrawing()
+        public void EndDrawing()
         {
             this._bitmap.AddDirtyRect(new System.Windows.Int32Rect(0, 0, this._bitmap.PixelWidth, this._bitmap.PixelHeight));
             this._bitmap.Unlock();
@@ -60,7 +60,7 @@ namespace Brevis
             }
         }
 
-        internal int GetPixel(int row, int column)
+        public int GetPixel(int row, int column)
         {
             if(this.IsOutside(row, column))
                 return 0; // assume black color outside of scene

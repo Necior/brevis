@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Brevis
 {
-    internal class Vertex3D
+    public class Vertex3D
     {
-        internal readonly double _x;
-        internal readonly double _y;
-        internal readonly double _z;
-        internal Vertex3D(double x, double y, double z)
+        private readonly double _x;
+        private readonly double _y;
+        private readonly double _z;
+        public Vertex3D(double x, double y, double z)
         {
             this._x = x;
             this._y = y;
