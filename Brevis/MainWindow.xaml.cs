@@ -47,9 +47,9 @@ namespace Brevis
 
         private Matrix GetProjectionMatrix()
         {
-            var ppm = Matrix.PerspectiveProjectionMatrix(1, 100);
+            var perspectiveProjectionMatrix = Matrix.PerspectiveProjectionMatrix(1, 100);
             var viewMatrix = Matrix.ViewMatrix();
-            return Matrix.Multiply(ppm, viewMatrix);
+            return Matrix.Multiply(perspectiveProjectionMatrix, viewMatrix);
         }
     }
 }
