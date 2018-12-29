@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,29 +70,90 @@ namespace Brevis
             return result;
         }
 
-        public static Matrix ViewMatrix()
+        public static Matrix ViewMatrix(
+            double cameraPositionX, double cameraPositionY, double cameraPositionZ,
+            double cameraTargetX, double cameraTargetY, double cameraTargetZ,
+            double upVersorX, double upVersorY, double upVersorZ
+        )
         {
+            /*
+             * TODO: this is messy implementation. Clean it up.
+             */
             var viewMatrix = new Matrix(4, 4);
-            viewMatrix.SetValue(0, 0, -0.447);
-            viewMatrix.SetValue(0, 1, 0.894);
-            viewMatrix.SetValue(0, 2, 0);
-            viewMatrix.SetValue(0, 3, -0.447);
 
-            viewMatrix.SetValue(1, 0, -0.458);
-            viewMatrix.SetValue(1, 1, -0.229);
-            viewMatrix.SetValue(1, 2, 0.859);
-            viewMatrix.SetValue(1, 3, -0.315);
+            var b13 = cameraPositionX - cameraTargetX;
+            var c13 = cameraPositionY - cameraTargetY;
+            var d13 = cameraPositionZ - cameraTargetZ;
+            // normalize
+            var k = Math.Sqrt(Math.Pow(b13, 2) + Math.Pow(c13, 2) + Math.Pow(d13, 2));
+            var b14 = b13 / k;
+            var c14 = c13 / k;
+            var d14 = d13 / k;
+            // xAxis = UpVector * zAxis
+            var b17 = upVersorY * d14 - upVersorZ * c14;
+            var c17 = -1.0 * upVersorX * d14 + upVersorZ * b14;
+            var d17 = upVersorX * c14 - upVersorY * b14;
+            // normalize
+            var l = Math.Sqrt(Math.Pow(b17, 2) + Math.Pow(c17, 2) + Math.Pow(d17, 2));
+            var b18 = b17 / l;
+            var c18 = c17 / l;
+            var d18 = d17 / l;
+            // yAxis = zAxis * xAxis
+            var b21 = c14 * d18 - d14 * c18;
+            var c21 = -1.0 * b14 * d18 + d14 * b18;
+            var d21 = b14 * c18 - c14 * b18;
 
-            viewMatrix.SetValue(2, 0, 0.768);
-            viewMatrix.SetValue(2, 1, 0.384);
-            viewMatrix.SetValue(2, 2, 0.512);
-            viewMatrix.SetValue(2, 3, -4.353);
+            viewMatrix.SetValue(0, 0, b18);
+            viewMatrix.SetValue(0, 1, b21);
+            viewMatrix.SetValue(0, 2, b14);
+            viewMatrix.SetValue(0, 3, cameraPositionX);
+
+            viewMatrix.SetValue(1, 0, c18);
+            viewMatrix.SetValue(1, 1, c21);
+            viewMatrix.SetValue(1, 2, c14);
+            viewMatrix.SetValue(1, 3, cameraPositionY);
+
+            viewMatrix.SetValue(2, 0, d18);
+            viewMatrix.SetValue(2, 1, d21);
+            viewMatrix.SetValue(2, 2, d14);
+            viewMatrix.SetValue(2, 3, cameraPositionZ);
 
             viewMatrix.SetValue(3, 0, 0);
             viewMatrix.SetValue(3, 1, 0);
             viewMatrix.SetValue(3, 2, 0);
             viewMatrix.SetValue(3, 3, 1);
-            return viewMatrix;
+            return viewMatrix.Inverse();
+        }
+
+        private Matrix Inverse()
+        {
+            if(this.Rows != 4 || this.Columns != 4)
+                throw new ArgumentException("Currently implemented only for 4x4 matrices");
+            var m = new Matrix4x4(
+                (float)this.GetValue(0, 0), (float)this.GetValue(0, 1), (float)this.GetValue(0, 2), (float)this.GetValue(0, 3),
+                (float)this.GetValue(1, 0), (float)this.GetValue(1, 1), (float)this.GetValue(1, 2), (float)this.GetValue(1, 3),
+                (float)this.GetValue(2, 0), (float)this.GetValue(2, 1), (float)this.GetValue(2, 2), (float)this.GetValue(2, 3),
+                (float)this.GetValue(3, 0), (float)this.GetValue(3, 1), (float)this.GetValue(3, 2), (float)this.GetValue(3, 3)
+            );
+            Matrix4x4.Invert(m, out var result4x4);
+            var result = new Matrix(4, 4);
+            result.SetValue(0, 0, result4x4.M11);
+            result.SetValue(0, 1, result4x4.M12);
+            result.SetValue(0, 2, result4x4.M13);
+            result.SetValue(0, 3, result4x4.M14);
+            result.SetValue(1, 0, result4x4.M21);
+            result.SetValue(1, 1, result4x4.M22);
+            result.SetValue(1, 2, result4x4.M23);
+            result.SetValue(1, 3, result4x4.M24);
+            result.SetValue(2, 0, result4x4.M31);
+            result.SetValue(2, 1, result4x4.M32);
+            result.SetValue(2, 2, result4x4.M33);
+            result.SetValue(2, 3, result4x4.M34);
+            result.SetValue(3, 0, result4x4.M41);
+            result.SetValue(3, 1, result4x4.M42);
+            result.SetValue(3, 2, result4x4.M43);
+            result.SetValue(3, 3, result4x4.M44);
+            return result;
         }
     }
 }
