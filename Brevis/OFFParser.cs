@@ -36,15 +36,12 @@ namespace Brevis
                 /* read vertices */
                 for (var i = 0; i < verticesCount; i++)
                 {
-                    /*
-                     * TODO: remove manually tuned translations and scale factors
-                     */
                     line = sr.ReadLine();
                     var rawCoordinates = line.Split(' ');
                     vertices.Add(new Vertex3D(
-                        35*double.Parse(rawCoordinates[0]) + 120,
-                        -35 * double.Parse(rawCoordinates[1]) + 200,
-                        35 * double.Parse(rawCoordinates[2]) + 100
+                        double.Parse(rawCoordinates[0]),
+                        double.Parse(rawCoordinates[1]),
+                        double.Parse(rawCoordinates[2])
                     ));
                 }
 

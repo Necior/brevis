@@ -22,13 +22,10 @@ namespace Brevis
 
         public Segment(Vertex2D a, Vertex2D b)
         {
-            /*
-             * TODO: what about double <-> int conversion?
-             */
-            this.x1 = (int)a.X;
-            this.y1 = (int)a.Y;
-            this.x2 = (int)b.X;
-            this.y2 = (int)b.Y;
+            this.x1 = (int)Math.Round(a.X);
+            this.y1 = (int)Math.Round(a.Y);
+            this.x2 = (int)Math.Round(b.X);
+            this.y2 = (int)Math.Round(b.Y);
         }
 
         public void Draw(IHasSetPixel canvas)

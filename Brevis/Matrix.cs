@@ -56,5 +56,17 @@ namespace Brevis
                         return false;
             return true;
         }
+
+        public static Matrix PerspectiveProjectionMatrix(double near, double far, double fov=45, double a=1)
+        {
+            var e = 1.0 / Math.Tan(Math.PI * fov / 360);
+            var result = new Matrix(4, 4);
+            result.SetValue(0, 0, e);
+            result.SetValue(1, 1, e/a);
+            result.SetValue(2, 2, (far+near)/(near-far));
+            result.SetValue(2, 3, (2 * far * near)/(near - far));
+            result.SetValue(3, 2, -1.0);
+            return result;
+        }
     }
 }

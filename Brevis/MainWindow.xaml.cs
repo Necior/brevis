@@ -39,7 +39,7 @@ namespace Brevis
             var off = new OFFParser(Environment.GetCommandLineArgs()[1]);
             foreach (var triangle3D in off.Triangles)
             {
-                triangle3D.OrthogonalProjection().Draw(this._scene);
+                triangle3D.PerspectiveProjection().Draw(this._scene);
             }
             this._scene.EndDrawing();
         }

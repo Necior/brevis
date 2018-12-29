@@ -22,5 +22,10 @@ namespace Brevis
         {
             return new Triangle2D(this._a.OrthogonalProjection(), this._b.OrthogonalProjection(), this._c.OrthogonalProjection());
         }
+
+        public Triangle2D PerspectiveProjection()
+        {
+            return new Triangle2D(this._a.PerspectiveProjection(), this._b.PerspectiveProjection(), this._c.PerspectiveProjection());
+        }
     }
 }
