@@ -26,7 +26,7 @@ namespace Brevis
              * TODO: remove hardcoded mapping: [-1, 1] -> [0, 255].
              */
             var normalizationFactor = m.GetValue(3, 0);
-            return new Vertex2D((m.GetValue(0, 0)/normalizationFactor + 1) * 255, (m.GetValue(1, 0)/normalizationFactor + 1)*255);
+            return new Vertex2D((m.GetValue(0, 0)/normalizationFactor + 1) * 127.5, (m.GetValue(1, 0)/normalizationFactor + 1) * 127.5);
         }
     }
 }
