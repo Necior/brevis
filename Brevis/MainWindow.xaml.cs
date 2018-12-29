@@ -48,27 +48,7 @@ namespace Brevis
         private Matrix GetProjectionMatrix()
         {
             var ppm = Matrix.PerspectiveProjectionMatrix(1, 100);
-
-            var viewMatrix = new Matrix(4, 4);
-            viewMatrix.SetValue(0, 0, -0.447);
-            viewMatrix.SetValue(0, 1, 0.894);
-            viewMatrix.SetValue(0, 2, 0);
-            viewMatrix.SetValue(0, 3, -0.447);
-
-            viewMatrix.SetValue(1, 0, -0.458);
-            viewMatrix.SetValue(1, 1, -0.229);
-            viewMatrix.SetValue(1, 2, 0.859);
-            viewMatrix.SetValue(1, 3, -0.315);
-
-            viewMatrix.SetValue(2, 0, 0.768);
-            viewMatrix.SetValue(2, 1, 0.384);
-            viewMatrix.SetValue(2, 2, 0.512);
-            viewMatrix.SetValue(2, 3, -4.353);
-
-            viewMatrix.SetValue(3, 0, 0);
-            viewMatrix.SetValue(3, 1, 0);
-            viewMatrix.SetValue(3, 2, 0);
-            viewMatrix.SetValue(3, 3, 1);
+            var viewMatrix = Matrix.ViewMatrix();
             return Matrix.Multiply(ppm, viewMatrix);
         }
     }
