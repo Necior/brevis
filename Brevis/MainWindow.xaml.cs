@@ -24,7 +24,7 @@ namespace Brevis
             InitializeComponent();
             var bitmap = new WriteableBitmap(256, 256, 96, 96, PixelFormats.Bgr32, null);
             this.SceneImage.Source = bitmap;
-            this._scene = new Scene(bitmap, 0);
+            this._scene = new Scene(bitmap, Const.Color.black);
 
             // TODO: remove me, this is temporary
             DrawLineOnScene();

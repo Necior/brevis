@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Const.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="IHasSetPixel.cs" />
     <Compile Include="Matrix.cs" />
