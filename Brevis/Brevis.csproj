@@ -66,6 +66,7 @@
     <Compile Include="Segment.cs" />
     <Compile Include="Triangle2D.cs" />
     <Compile Include="Triangle3D.cs" />
+    <Compile Include="Vector3D.cs" />
     <Compile Include="Vertex2D.cs" />
     <Compile Include="Vertex3D.cs" />
     <Page Include="MainWindow.xaml">

@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Brevis"
         mc:Ignorable="d"
-        Title="Brevis" Height="450" Width="800">
+        Title="Brevis"
+        Height="450"
+        Width="800"
+        KeyDown="MainWindow_OnKeyDown"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="256" />
@@ -15,6 +19,11 @@
             <ColumnDefinition Width="256" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image Name="SceneImage" Grid.Row="0" Grid.Column="0" Stretch="None" />
+        <Image
+            Name="SceneImage"
+            Grid.Row="0"
+            Grid.Column="0"
+            Stretch="None"
+            />
     </Grid>
 </Window>

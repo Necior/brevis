@@ -125,6 +125,34 @@ namespace Brevis
             return viewMatrix.Inverse();
         }
 
+        public static Matrix RotationMatrix(Vector3D t, double angle)
+        {
+            /*
+             * TIMTOWTDI, as Perl programmers say...
+             * I used https://computergraphics.stackexchange.com/a/2404 and Wolfram Alpha to simplify.
+             *
+             * Possible speedup: hardcode alpha :-)
+             */
+            var rotationMatrix = new Matrix(3, 3);
+            var x = t.x;
+            var y = t.y;
+            var z = t.z;
+
+            rotationMatrix.SetValue(0, 0, 1);
+            rotationMatrix.SetValue(0, 1, z * z * (1 - Math.Cos(angle)) - z * Math.Sin(angle));
+            rotationMatrix.SetValue(0, 2, y * y * (1 - Math.Cos(angle)) + y * Math.Sin(angle));
+
+            rotationMatrix.SetValue(1, 0, z * z * (1 - Math.Cos(angle)) + z * Math.Sin(angle));
+            rotationMatrix.SetValue(1, 1, 1);
+            rotationMatrix.SetValue(1, 2, x * x * (1 - Math.Cos(angle)) - x * Math.Sin(angle));
+
+            rotationMatrix.SetValue(2, 0, y * y * (1 - Math.Cos(angle)) - y * Math.Sin(angle));
+            rotationMatrix.SetValue(2, 1, x * x * (1 - Math.Cos(angle)) + x * Math.Sin(angle));
+            rotationMatrix.SetValue(2, 2, 1);
+
+            return rotationMatrix;
+        }
+
         private Matrix Inverse()
         {
             if(this.Rows != 4 || this.Columns != 4)
