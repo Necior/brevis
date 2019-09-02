@@ -39,6 +39,8 @@ namespace Brevis
 
         private void Redraw()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             var projectionMatrix = this.GetProjectionMatrix();
             this._scene.StartDrawing();
             /*
@@ -50,6 +52,10 @@ namespace Brevis
                 triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene);
             }
             this._scene.EndDrawing();
+
+            watch.Stop();
+            var fps = 1000 / watch.ElapsedMilliseconds;
+            this.FpsLabel.Content = $"It took {watch.ElapsedMilliseconds} ms to generate a frame. FPS at this speed: {fps}";
         }
 
         private Matrix GetProjectionMatrix()

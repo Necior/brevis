@@ -25,5 +25,6 @@
             Grid.Column="0"
             Stretch="None"
             />
+        <Label Grid.Row="0" Grid.Column="1" Name="FpsLabel" />
     </Grid>
 </Window>
