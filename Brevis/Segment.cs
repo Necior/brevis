@@ -22,10 +22,10 @@ namespace Brevis
 
         public Segment(Vertex2D a, Vertex2D b)
         {
-            this.x1 = (int)Math.Round(a.X);
-            this.y1 = (int)Math.Round(a.Y);
-            this.x2 = (int)Math.Round(b.X);
-            this.y2 = (int)Math.Round(b.Y);
+            this.x1 = a.X;
+            this.y1 = a.Y;
+            this.x2 = b.X;
+            this.y2 = b.Y;
         }
 
         public void Draw(IHasSetPixel canvas, int color)

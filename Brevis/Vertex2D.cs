@@ -8,17 +8,23 @@ namespace Brevis
 {
     public class Vertex2D
     {
-        private readonly double x_;
-        private readonly double y_;
+        private readonly int x_;
+        private readonly int y_;
 
-        public Vertex2D(double x, double y)
+        public Vertex2D(int x, int y)
         {
             this.x_ = x;
             this.y_ = y;
         }
 
-        public double X => x_;
-        public double Y => y_;
+        public Vertex2D(double x, double y)
+        {
+            this.x_ = (int) Math.Round(x);
+            this.y_ = (int) Math.Round(y);
+        }
+
+        public int X => x_;
+        public int Y => y_;
 
         public static Vertex2D FromMatrix(Matrix m)
         {
