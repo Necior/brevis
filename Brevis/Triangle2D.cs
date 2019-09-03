@@ -11,17 +11,24 @@ namespace Brevis
         private readonly Vertex2D _a;
         private readonly Vertex2D _b;
         private readonly Vertex2D _c;
+        private readonly int _color;
 
-        public Triangle2D(Vertex2D a, Vertex2D b, Vertex2D c)
+        public Triangle2D(Vertex2D a, Vertex2D b, Vertex2D c, int color)
         {
             this._a = a;
             this._b = b;
             this._c = c;
+            this._color = color;
         }
 
         public void Draw(IHasSetPixel canvas, int color)
         {
             this.DrawWireframe(canvas, color);
+        }
+
+        public void Draw(IHasSetPixel canvas)
+        {
+            this.Draw(canvas, this._color);
         }
 
         private void DrawWireframe(IHasSetPixel canvas, int color)

@@ -50,7 +50,7 @@ namespace Brevis
             this._scene.StartDrawing();
             foreach (var triangle3D in offParser.Triangles)
             {
-                triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, Const.Color.white);
+                triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene);
             }
             this._scene.EndDrawing();
 

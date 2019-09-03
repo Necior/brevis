@@ -45,6 +45,7 @@ namespace Brevis
                     ));
                 }
 
+                var rng = new Random(1337); /* Constant seed for reproducibility. */
                 /* read triangles */
                 for (var i = 0; i < trianglesCount; i++)
                 {
@@ -53,7 +54,8 @@ namespace Brevis
                     this.Triangles.Add(new Triangle3D(
                         vertices[int.Parse(rawTriangle[1])],
                         vertices[int.Parse(rawTriangle[2])],
-                        vertices[int.Parse(rawTriangle[3])]
+                        vertices[int.Parse(rawTriangle[3])],
+                        rng.Next(0x000000, 0x1000000)
                     ));
                 }
             }
