@@ -1,0 +1,5 @@
+﻿1>------ Build started: Project: Brevis, Configuration: Debug Any CPU ------
+1>C:\Users\n3t\source\repos\Brevis\Brevis\Matrix.cs(10,18,10,24): warning CS0659: 'Matrix' overrides Object.Equals(object o) but does not override Object.GetHashCode()
+1>C:\Users\n3t\source\repos\Brevis\Brevis\Matrix.cs(10,18,10,24): warning CS0659: 'Matrix' overrides Object.Equals(object o) but does not override Object.GetHashCode()
+1>  Brevis -> C:\Users\n3t\source\repos\Brevis\Brevis\bin\Debug\Brevis.exe
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

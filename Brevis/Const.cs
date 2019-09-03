@@ -11,6 +11,7 @@ namespace Brevis
         public class Color
         {
             static public int black = 0x000000;
+            static public int white = 0xffffff;
         }
     }
 }

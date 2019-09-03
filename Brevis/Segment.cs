@@ -28,12 +28,12 @@ namespace Brevis
             this.y2 = (int)Math.Round(b.Y);
         }
 
-        public void Draw(IHasSetPixel canvas)
+        public void Draw(IHasSetPixel canvas, int color)
         {
-            this.DrawBresenham(canvas);
+            this.DrawBresenham(canvas, color);
         }
 
-        private void DrawBresenham(IHasSetPixel canvas)
+        private void DrawBresenham(IHasSetPixel canvas, int color)
         {
             int x0 = this.x1;
             int x1 = this.x2;
@@ -45,10 +45,7 @@ namespace Brevis
 
             while (true)
             {
-                /*
-                 * TODO: currently, color is white. Make it customizable.
-                 */
-                canvas.SetPixel(y0, x0, 16777215);
+                canvas.SetPixel(y0, x0, color);
                 if (x0 == x1 && y0 == y1)
                     break;
                 e2 = 2 * err;

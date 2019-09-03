@@ -8,6 +8,6 @@ namespace Brevis
 {
     public interface IDrawable
     {
-        void Draw(IHasSetPixel canvas);
+        void Draw(IHasSetPixel canvas, int color);
     }
 }
