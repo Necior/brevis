@@ -23,6 +23,7 @@ namespace Brevis
         private Vector3D camPos;
         private Vector3D lookAtVersor;
         private Vector3D camUpVersor;
+        private readonly OFFParser offParser;
 
         private Vector3D camTarget => camPos.Add(lookAtVersor);
 
@@ -32,6 +33,10 @@ namespace Brevis
             var bitmap = new WriteableBitmap(256, 256, 96, 96, PixelFormats.Bgr32, null);
             this.SceneImage.Source = bitmap;
             this._scene = new Scene(bitmap, Const.Color.black);
+            /*
+             * First command line argument must be a path to the OFF file.
+             */
+            offParser = new OFFParser(Environment.GetCommandLineArgs()[1]);
 
             ResetCameraPosition();
             Redraw(); /* Initial render sound like a good idea, let's do it. */
@@ -43,11 +48,7 @@ namespace Brevis
 
             var projectionMatrix = this.GetProjectionMatrix();
             this._scene.StartDrawing();
-            /*
-             * First command line argument must be a path to the OFF file.
-             */
-            var off = new OFFParser(Environment.GetCommandLineArgs()[1]);
-            foreach (var triangle3D in off.Triangles)
+            foreach (var triangle3D in offParser.Triangles)
             {
                 triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, Const.Color.white);
             }
