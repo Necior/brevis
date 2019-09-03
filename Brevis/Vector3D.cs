@@ -34,6 +34,21 @@ namespace Brevis
             return new Vector3D(x*v, y*v, z*v);
         }
 
+        static public Vector3D operator -(Vector3D a, Vector3D b)
+        {
+            return new Vector3D(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
+        static public double DotProduct(Vector3D a, Vector3D b)
+        {
+            return a.x * b.x + a.y * b.y + a.z * b.z;
+        }
+
+        static public Vector3D CrossProduct(Vector3D u, Vector3D v)
+        {
+            return new Vector3D(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x);
+        }
+
         public Matrix ToMatrix()
         {
             Matrix m = new Matrix(3, 1);

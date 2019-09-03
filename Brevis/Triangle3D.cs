@@ -8,29 +8,37 @@ namespace Brevis
 {
     public class Triangle3D
     {
-        private readonly Vertex3D _a;
-        private readonly Vertex3D _b;
-        private readonly Vertex3D _c;
+        public readonly Vertex3D a;
+        public readonly Vertex3D b;
+        public readonly Vertex3D c;
         private readonly int _color;
+        public readonly Vector3D normal;
         public Triangle3D(Vertex3D a, Vertex3D b, Vertex3D c, int color)
         {
-            this._a = a;
-            this._b = b;
-            this._c = c;
+            this.a = a;
+            this.b = b;
+            this.c = c;
             this._color = color;
+            this.normal = CalculateNormal();
+        }
+
+        private Vector3D CalculateNormal()
+        {
+            /* Normal of a triangle is cross product of its two sides. */
+            return Vector3D.CrossProduct(b - a, c - a).Normalize();
         }
 
         public Triangle2D OrthogonalProjection()
         {
-            return new Triangle2D(this._a.OrthogonalProjection(), this._b.OrthogonalProjection(), this._c.OrthogonalProjection(), this._color);
+            return new Triangle2D(this.a.OrthogonalProjection(), this.b.OrthogonalProjection(), this.c.OrthogonalProjection(), this._color);
         }
 
         public Triangle2D PerspectiveProjection(Matrix projectionMatrix)
         {
             return new Triangle2D(
-                this._a.PerspectiveProjection(projectionMatrix),
-                this._b.PerspectiveProjection(projectionMatrix),
-                this._c.PerspectiveProjection(projectionMatrix),
+                this.a.PerspectiveProjection(projectionMatrix),
+                this.b.PerspectiveProjection(projectionMatrix),
+                this.c.PerspectiveProjection(projectionMatrix),
                 this._color
             );
         }
