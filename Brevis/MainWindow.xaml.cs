@@ -47,6 +47,7 @@ namespace Brevis
             var watch = System.Diagnostics.Stopwatch.StartNew();
 
             var projectionMatrix = this.GetProjectionMatrix();
+            this._scene.ResetZbuffer();
             this._scene.StartDrawing();
             foreach (var triangle3D in offParser.Triangles)
             {

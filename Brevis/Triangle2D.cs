@@ -34,8 +34,6 @@ namespace Brevis
 
         private void DrawMesh(IHasSetPixel canvas, int color)
         {
-            DrawWireframe(canvas, color);
-
             var p1 = new Segment(_a, _b);
             var p2 = new Segment(_b, _c);
             var p3 = new Segment(_c, _a);
@@ -47,13 +45,30 @@ namespace Brevis
             /*
              * TODO: don't hardcode canvas size.
              */
-            for (int x = Math.Max(0, minX); x <= Math.Min(256, maxX); x++)
+            for (int x = Math.Max(0, minX); x <= Math.Min(255, maxX); x++)
             {
-                for (int y = Math.Max(0, minY); y <= Math.Min(256, maxY); y++)
+                for (int y = Math.Max(0, minY); y <= Math.Min(255, maxY); y++)
                 {
                     if (Inside(x, y))
                     {
-                        canvas.SetPixel(y, x, color);
+                        /*
+                         * https://en.wikipedia.org/wiki/Barycentric_coordinate_system
+                         */
+                        /*
+                         * TODO: maybe extract constants out of the loop... If compiler won't ;-)
+                         */
+                        double x1 = _a.X;
+                        double x2 = _b.X;
+                        double x3 = _c.X;
+                        double y1 = _a.Y;
+                        double y2 = _b.Y;
+                        double y3 = _c.Y;
+                        double detT = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3); 
+                        double lambda1 = ((y2 - y3)*(x - x3) + (x3 - x2)*(y - y3))/detT;
+                        double lambda2 = ((y3 - y1)*(x - x3) + (x1 - x3)*(y - y3))/detT;
+                        double lambda3 = 1 - lambda1 - lambda2;
+                        var z = lambda1 * _a.Z + lambda2 * _b.Z + lambda3 * _c.Z;
+                        canvas.SetPixel(y, x, z, color);
                     }
                 }
             }

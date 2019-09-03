@@ -9,5 +9,6 @@ namespace Brevis
     public interface IHasSetPixel
     {
         void SetPixel(int row, int column, int color);
+        void SetPixel(int row, int column, double z, int color);
     }
 }

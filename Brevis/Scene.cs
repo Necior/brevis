@@ -12,10 +12,20 @@ namespace Brevis
     {
         private readonly WriteableBitmap _bitmap;
         private readonly int _color;
+        private double[,] _zbuffer;
         public Scene(WriteableBitmap bitmap, int color)
         {
             this._bitmap = bitmap;
             this._color = color;
+            _zbuffer = new double[_bitmap.PixelHeight, _bitmap.PixelWidth];
+            ResetZbuffer();
+        }
+
+        public void ResetZbuffer()
+        {
+            for (int row = 0; row < _bitmap.PixelHeight; row++)
+            for (int column = 0; column < _bitmap.PixelWidth; column++)
+                _zbuffer[row, column] = double.MaxValue;
         }
 
         public void StartDrawing()
@@ -81,6 +91,15 @@ namespace Brevis
         private bool IsOutside(int row, int column)
         {
             return !this.IsInside(row, column);
+        }
+
+        public void SetPixel(int row, int column, double z, int color)
+        {
+            if (_zbuffer[row, column] > z)
+            {
+                _zbuffer[row, column] = z;
+                SetPixel(row, column, color);
+            }
         }
     }
 }
