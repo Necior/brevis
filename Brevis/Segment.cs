@@ -30,7 +30,15 @@ namespace Brevis
 
         public void Draw(IHasSetPixel canvas, int color)
         {
-            this.DrawBresenham(canvas, color);
+            /*
+             * TODOs:
+             *     - dont' hardcode canvas size.
+             *     - draw partially visible segments. Maybe some clipping algorithm?
+             */
+            if (x1 >= 0 && x2 >= 0 && x1 <= 256 && x2 <= 256 & y1 >= 0 && y2 >= 0 && y1 <= 256 && y2 <= 256)
+                this.DrawBresenham(canvas, color); /* Trivially accepted. */
+            if ((x1 < 0 && x2 < 0) || (x1 > 256 && x2 > 256) || (y1 < 0 && y2 < 0) || (y1 > 256 && y2 > 256))
+                return; /* Trivially rejected. */
         }
 
         private void DrawBresenham(IHasSetPixel canvas, int color)
