@@ -30,7 +30,7 @@ namespace Brevis
 
         public Triangle2D OrthogonalProjection()
         {
-            return new Triangle2D(this.a.OrthogonalProjection(), this.b.OrthogonalProjection(), this.c.OrthogonalProjection(), this._color);
+            return new Triangle2D(this.a.OrthogonalProjection(), this.b.OrthogonalProjection(), this.c.OrthogonalProjection(), this, this._color);
         }
 
         public Triangle2D PerspectiveProjection(Matrix projectionMatrix)
@@ -39,8 +39,14 @@ namespace Brevis
                 this.a.PerspectiveProjection(projectionMatrix),
                 this.b.PerspectiveProjection(projectionMatrix),
                 this.c.PerspectiveProjection(projectionMatrix),
+                this,
                 this._color
             );
+        }
+
+        public bool Contains(Vertex3D v)
+        {
+            return a.Equals(v) || b.Equals(v) || c.Equals(v);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Brevis
         private readonly int x_;
         private readonly int y_;
         private readonly double z_; /* Might be 0 if unset... */
+        public Vector3D normal;
 
         public Vertex2D(int x, int y, double z = 0)
         {
@@ -30,17 +31,24 @@ namespace Brevis
         public int Y => y_;
         public double Z => z_;
 
-        public static Vertex2D FromMatrix(Matrix m)
+        public void SetNormal(Vector3D normal)
+        {
+            this.normal = normal;
+        }
+
+        public static Vertex2D FromMatrix(Matrix m, Vector3D normal)
         {
             /*
              * TODO: remove hardcoded mapping: [-1, 1] -> [0, 255].
              */
             var normalizationFactor = m.GetValue(3, 0);
-            return new Vertex2D(
+            var result = new Vertex2D(
                 (m.GetValue(0, 0)/normalizationFactor + 1) * 127.5,
                 (m.GetValue(1, 0)/normalizationFactor + 1) * 127.5,
                 (m.GetValue(2, 0)/normalizationFactor + 1) * 127.5
                 );
+            result.SetNormal(normal);
+            return result;
         }
     }
 }

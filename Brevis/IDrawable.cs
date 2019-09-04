@@ -10,4 +10,9 @@ namespace Brevis
     {
         void Draw(IHasSetPixel canvas, int color);
     }
+
+    public interface IDrawableAdvanced
+    {
+        void Draw(IHasSetPixel canvas, int color, VisualParams vp);
+    }
 }

@@ -59,6 +59,40 @@ namespace Brevis
                     ));
                 }
             }
+
+            /*
+             * Approximate normals in vertices by probing adjacent triangles (and "home"-triangle).
+             */
+            foreach (var t1 in Triangles)
+            {
+                var adjacentNormalsA = new List<Vector3D>();
+                var adjacentNormalsB = new List<Vector3D>();
+                var adjacentNormalsC = new List<Vector3D>();
+                foreach (var t2 in Triangles)
+                {
+                    if (t2.Contains(t1.a))
+                        adjacentNormalsA.Add(t2.normal);
+                    if (t2.Contains(t1.b))
+                        adjacentNormalsB.Add(t2.normal);
+                    if (t2.Contains(t1.c))
+                        adjacentNormalsC.Add(t2.normal);
+                }
+
+                t1.a.SetNormal(Average(adjacentNormalsA));
+                t1.b.SetNormal(Average(adjacentNormalsB));
+                t1.c.SetNormal(Average(adjacentNormalsC));
+            }
+        }
+
+        private Vector3D Average(List<Vector3D> l)
+        {
+            var result = new Vector3D(0, 0, 0);
+            foreach (var v in l)
+            {
+                result = result.Add(v);
+            }
+
+            return result.Mul(1.0 / l.Count);
         }
     }
 }

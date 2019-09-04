@@ -21,6 +21,7 @@ namespace Brevis
     {
         private readonly Scene _scene;
         private Vertex3D camPos;
+        private Vertex3D lightPos;
         private Vector3D lookAtVersor;
         private Vector3D camUpVersor;
         private readonly OFFParser offParser;
@@ -38,7 +39,7 @@ namespace Brevis
              */
             offParser = new OFFParser(Environment.GetCommandLineArgs()[1]);
 
-            ResetCameraPosition();
+            ResetScene();
             Redraw(); /* Initial render sound like a good idea, let's do it. */
         }
 
@@ -52,7 +53,7 @@ namespace Brevis
             foreach (var triangle3D in offParser.Triangles)
             {
                 if(Vector3D.DotProduct(triangle3D.a - camPos, triangle3D.normal) >= 0) /* Backface culling, yay! */
-                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene);
+                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, new VisualParams(camPos, lightPos));
             }
             this._scene.EndDrawing();
 
@@ -83,7 +84,7 @@ namespace Brevis
             switch (e.Key)
             {
                 case Key.Back:
-                    ResetCameraPosition();
+                    ResetScene();
                     break;
                 case Key.W:
                     MoveForward(stepSize);
@@ -169,12 +170,13 @@ namespace Brevis
             camUpVersor = Vector3D.FromMatrix(camUpMatrix).Normalize();
         }
 
-        private void ResetCameraPosition()
+        private void ResetScene()
         {
             /*
              * These are a good default values for a teapot model.
              */
-            camPos = new Vertex3D(0, 0, 10);
+            camPos = new Vertex3D(0, 1.5, 10);
+            lightPos = new Vertex3D(5, 5, 5);
             lookAtVersor = new Vector3D(0, 0, -1).Normalize();
             camUpVersor = new Vector3D(0, -1, 0).Normalize();
         }

@@ -69,6 +69,7 @@
     <Compile Include="Vector3D.cs" />
     <Compile Include="Vertex2D.cs" />
     <Compile Include="Vertex3D.cs" />
+    <Compile Include="VisualParams.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
