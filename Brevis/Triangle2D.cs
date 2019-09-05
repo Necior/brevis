@@ -63,7 +63,9 @@ namespace Brevis
                         double y1 = _a.Y;
                         double y2 = _b.Y;
                         double y3 = _c.Y;
-                        double detT = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3); 
+                        double detT = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3);
+                        if(detT == 0)
+                            continue;
                         double lambda1 = ((y2 - y3)*(x - x3) + (x3 - x2)*(y - y3))/detT;
                         double lambda2 = ((y3 - y1)*(x - x3) + (x1 - x3)*(y - y3))/detT;
                         double lambda3 = 1 - lambda1 - lambda2;
@@ -102,6 +104,15 @@ namespace Brevis
                             finalColor = MixColors(finalColor, red, green, blue);
                         }
 
+                        if (vp.fog)
+                        {
+                            var distance = (vp.camPos - myPos).Norm();
+                            if (distance > 10)
+                                distance = 10;
+                            /* Yay, another magic constant to make teapot look good with a fog. */
+                            finalColor = MixColors(finalColor, vp.fogColor, distance/10);
+                        }
+
                         canvas.SetPixel(y, x, z, finalColor);
                     }
                 }
@@ -124,6 +135,18 @@ namespace Brevis
             return (((((c & 0xff0000) >> 16) + r) / 2) << 16) + 
                    (((((c & 0x00ff00) >> 8) + g) / 2) << 8) +
                    (((c & 0x0000ff) + b) / 2);
+        }
+
+        private int MixColors(int c1, int c2, double alpha)
+        {
+            return (MixColor((c1 & 0xff0000) >> 16, (c2 & 0xff0000) >> 16, alpha) << 16) +
+                   (MixColor((c1 & 0x00ff00) >> 8, (c2 & 0x00ff00) >> 8, alpha) << 8) +
+                   MixColor(c1 & 0x0000ff, c2 & 0x0000ff, alpha);
+        }
+
+        private int MixColor(int a, int b, double alpha)
+        {
+            return Math.Max(0, Math.Min(255, (int)(a * (1 - alpha) + b * alpha)));
         }
 
         private int UseTexture(Vertex3D v, PixelColor[,] pixels)

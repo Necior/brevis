@@ -18,9 +18,14 @@ namespace Brevis
             this.z = z;
         }
 
+        public double Norm()
+        {
+            return Math.Sqrt(x * x + y * y + z * z);
+        }
+
         public Vector3D Normalize()
         {
-            double norm = Math.Sqrt(x * x + y * y + z * z);
+            var norm = Norm();
             return new Vector3D(x/norm, y/norm, z/norm);
         }
 

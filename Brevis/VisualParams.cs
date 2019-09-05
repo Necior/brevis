@@ -12,6 +12,8 @@ namespace Brevis
         public readonly Vertex3D lightPos;
 
         public readonly bool phong;
+        public readonly bool fog;
+        public readonly int fogColor;
    
         public readonly double k_a = 0.3;
         public readonly double k_d = 0.3;
@@ -42,6 +44,8 @@ namespace Brevis
             this.colorMode = "COLOR";
             this.defaultColor = Const.Color.blue;
             this.phong = true;
+            this.fog = true;
+            this.fogColor = Const.Color.white;
         }
     }
 }
