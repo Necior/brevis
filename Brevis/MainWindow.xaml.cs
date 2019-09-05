@@ -41,6 +41,7 @@ namespace Brevis
              */
             offParser = new OFFParser(Environment.GetCommandLineArgs()[1]);
             pixels = Utils.GetPixels(new BitmapImage(new Uri(Environment.GetCommandLineArgs()[2])));
+            offParser.MakeTransparent(30); /* TODO: add this parameter to the UI. */
 
             ResetScene();
             Redraw(); /* Initial render sounds like a good idea, let's do it. */
@@ -49,16 +50,17 @@ namespace Brevis
         private void Redraw()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
+            var vp = new VisualParams(camPos, lightPos, pixels);
 
             var projectionMatrix = this.GetProjectionMatrix();
             this._scene.ResetZbuffer();
             this._scene.StartDrawing();
             foreach (var triangle3D in offParser.Triangles)
             {
-                if(Vector3D.DotProduct(triangle3D.a - camPos, triangle3D.normal) >= 0) /* Backface culling, yay! */
-                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, new VisualParams(camPos, lightPos, pixels));
+                if (Vector3D.DotProduct(triangle3D.a - camPos, triangle3D.normal) >= 0) /* Backface culling, yay! */
+                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, vp);
             }
-            this._scene.EndDrawing();
+            this._scene.EndDrawing(vp.transparencyMode);
 
             watch.Stop();
             var fps = 1000 / watch.ElapsedMilliseconds;

@@ -94,5 +94,16 @@ namespace Brevis
 
             return result.Mul(1.0 / l.Count);
         }
+
+        public void MakeTransparent(int n)
+        {
+            var rng = new Random(1337); /* Constant seed to be deterministic. */
+            var shuffled = Triangles.OrderBy(a => rng.Next());
+            int count = 0;
+            foreach (var triangle in shuffled)
+            {
+                triangle.SetTransparent(count++ < n);
+            }
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace Brevis
     {
         void SetPixel(int row, int column, int color);
         void SetPixel(int row, int column, double z, int color);
+        void SetPixel(int row, int column, double z, int color, bool transparent);
     }
 }

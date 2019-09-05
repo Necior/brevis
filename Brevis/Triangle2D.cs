@@ -14,14 +14,16 @@ namespace Brevis
         private readonly Vertex2D _c;
         private readonly int _color;
         private readonly Triangle3D _original;
+        private readonly bool _transparent;
 
-        public Triangle2D(Vertex2D a, Vertex2D b, Vertex2D c, Triangle3D original, int color)
+        public Triangle2D(Vertex2D a, Vertex2D b, Vertex2D c, Triangle3D original, int color, bool transparent = false)
         {
             this._a = a;
             this._b = b;
             this._c = c;
             this._color = color;
             this._original = original;
+            this._transparent = transparent;
         }
 
         public void Draw(IHasSetPixel canvas, VisualParams vp)
@@ -113,7 +115,10 @@ namespace Brevis
                             finalColor = MixColors(finalColor, vp.fogColor, distance/10);
                         }
 
-                        canvas.SetPixel(y, x, z, finalColor);
+                        if (vp.transparencyMode)
+                            canvas.SetPixel(y, x, z, finalColor, _transparent);
+                        else
+                            canvas.SetPixel(y, x, z, finalColor);
                     }
                 }
             }

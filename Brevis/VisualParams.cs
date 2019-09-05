@@ -14,6 +14,8 @@ namespace Brevis
         public readonly bool phong;
         public readonly bool fog;
         public readonly int fogColor;
+
+        public readonly bool transparencyMode;
    
         public readonly double k_a = 0.3;
         public readonly double k_d = 0.3;
@@ -44,8 +46,9 @@ namespace Brevis
             this.colorMode = "COLOR";
             this.defaultColor = Const.Color.blue;
             this.phong = true;
-            this.fog = true;
+            this.fog = false;
             this.fogColor = Const.Color.white;
+            this.transparencyMode = false;
         }
     }
 }

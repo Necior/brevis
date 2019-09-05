@@ -13,6 +13,7 @@ namespace Brevis
         public readonly Vertex3D c;
         private readonly int _color;
         public readonly Vector3D normal;
+        private bool transparent;
         public Triangle3D(Vertex3D a, Vertex3D b, Vertex3D c, int color)
         {
             this.a = a;
@@ -20,6 +21,11 @@ namespace Brevis
             this.c = c;
             this._color = color;
             this.normal = CalculateNormal();
+        }
+
+        public void SetTransparent(bool t)
+        {
+            this.transparent = t;
         }
 
         private Vector3D CalculateNormal()
@@ -40,7 +46,8 @@ namespace Brevis
                 this.b.PerspectiveProjection(projectionMatrix),
                 this.c.PerspectiveProjection(projectionMatrix),
                 this,
-                this._color
+                this._color,
+                this.transparent
             );
         }
 
