@@ -24,17 +24,12 @@ namespace Brevis
             this._original = original;
         }
 
-        public void Draw(IHasSetPixel canvas, int color, VisualParams vp)
-        {
-            this.DrawMesh(canvas, color, vp);
-        }
-
         public void Draw(IHasSetPixel canvas, VisualParams vp)
         {
-            this.Draw(canvas, this._color, vp);
+            this.DrawMesh(canvas, vp);
         }
 
-        private void DrawMesh(IHasSetPixel canvas, int color, VisualParams vp)
+        private void DrawMesh(IHasSetPixel canvas, VisualParams vp)
         {
             var p1 = new Segment(_a, _b);
             var p2 = new Segment(_b, _c);
@@ -80,29 +75,32 @@ namespace Brevis
                          * I interpolate current pixel's 3D position and its normal vector using barycentric coordinates.
                          * Especially interpolating normals make render so smooooooth :-)
                          */
-
                         var myPos = Vertex3D.Average(_original.a, _original.b, _original.c, lambda1, lambda2, lambda3);
-                        var L = (vp.lightPos - myPos).Normalize();
-                        var N = _a.normal.Mul(lambda1).Add(_b.normal.Mul(lambda2).Add(_c.normal.Mul(lambda3)));
-                        var R = (N.Mul(2 * Vector3D.DotProduct(L, N)) - L).Normalize();
-                        var V = (vp.camPos - myPos).Normalize();
+                        var finalColor = GetColor(vp, myPos);
+                        if (vp.phong)
+                        {
+                            var L = (vp.lightPos - myPos).Normalize();
+                            var N = _a.normal.Mul(lambda1).Add(_b.normal.Mul(lambda2).Add(_c.normal.Mul(lambda3)));
+                            var R = (N.Mul(2 * Vector3D.DotProduct(L, N)) - L).Normalize();
+                            var V = (vp.camPos - myPos).Normalize();
 
-                        double ambient = vp.k_a * vp.i_aR;
-                        double diffuse = vp.k_d * Math.Max(0, Vector3D.DotProduct(L, N)) * vp.i_dR;
-                        double specular = vp.k_s * Math.Pow(Math.Max(0, Vector3D.DotProduct(R, V)), vp.specularAlpha) * vp.i_sR;
-                        var red = Math.Min(255, Math.Max(0, (int) ((ambient + diffuse + specular))));
+                            double ambient = vp.k_a * vp.i_aR;
+                            double diffuse = vp.k_d * Math.Max(0, Vector3D.DotProduct(L, N)) * vp.i_dR;
+                            double specular = vp.k_s * Math.Pow(Math.Max(0, Vector3D.DotProduct(R, V)), vp.specularAlpha) * vp.i_sR;
+                            var red = Math.Min(255, Math.Max(0, (int)((ambient + diffuse + specular))));
 
-                        ambient = vp.k_a * vp.i_aG;
-                        diffuse = vp.k_d * Math.Max(0, Vector3D.DotProduct(L, N)) * vp.i_dG;
-                        specular = vp.k_s * Math.Pow(Math.Max(0, Vector3D.DotProduct(R, V)), vp.specularAlpha) * vp.i_sG;
-                        var green = Math.Min(255, Math.Max(0, (int)((ambient + diffuse + specular))));
+                            ambient = vp.k_a * vp.i_aG;
+                            diffuse = vp.k_d * Math.Max(0, Vector3D.DotProduct(L, N)) * vp.i_dG;
+                            specular = vp.k_s * Math.Pow(Math.Max(0, Vector3D.DotProduct(R, V)), vp.specularAlpha) * vp.i_sG;
+                            var green = Math.Min(255, Math.Max(0, (int)((ambient + diffuse + specular))));
 
-                        ambient = vp.k_a * vp.i_aB;
-                        diffuse = vp.k_d * Math.Max(0, Vector3D.DotProduct(L, N)) * vp.i_dB;
-                        specular = vp.k_s * Math.Pow(Math.Max(0, Vector3D.DotProduct(R, V)), vp.specularAlpha) * vp.i_sB;
-                        var blue = Math.Min(255, Math.Max(0, (int)((ambient + diffuse + specular))));
+                            ambient = vp.k_a * vp.i_aB;
+                            diffuse = vp.k_d * Math.Max(0, Vector3D.DotProduct(L, N)) * vp.i_dB;
+                            specular = vp.k_s * Math.Pow(Math.Max(0, Vector3D.DotProduct(R, V)), vp.specularAlpha) * vp.i_sB;
+                            var blue = Math.Min(255, Math.Max(0, (int)((ambient + diffuse + specular))));
 
-                        var finalColor = (red << 16) + (green << 8) + blue;
+                            finalColor = MixColors(finalColor, red, green, blue);
+                        }
 
                         canvas.SetPixel(y, x, z, finalColor);
                     }
@@ -110,7 +108,37 @@ namespace Brevis
             }
         }
 
-        private bool Inside(int x, int y)
+        private int GetColor(VisualParams vp, Vertex3D v)
+        {
+            if (vp.colorMode == "TEXTURE")
+                return UseTexture(v, vp.pixels);
+            if (vp.colorMode == "RANDOM")
+                return _color;
+            if (vp.colorMode == "COLOR")
+                return vp.defaultColor;
+            return Const.Color.white;
+        }
+
+        private int MixColors(int c, int r, int g, int b)
+        {
+            return (((((c & 0xff0000) >> 16) + r) / 2) << 16) + 
+                   (((((c & 0x00ff00) >> 8) + g) / 2) << 8) +
+                   (((c & 0x0000ff) + b) / 2);
+        }
+
+        private int UseTexture(Vertex3D v, PixelColor[,] pixels)
+        {
+            /*
+             * Some magic constants... They make "snow" texture look good enough.
+             */
+            var x = (int)Math.Min(Math.Max(0, (int)(pixels.GetLength(0)/2 + v.x*32)), pixels.GetLength(0)-1);
+            var z = (int)Math.Min(Math.Max(0, (int)(pixels.GetLength(1)/2 + v.z*32)), pixels.GetLength(1)-1);
+            var r = pixels[x, z];
+
+            return (r.Red << 16) + (r.Green << 8) + r.Blue;
+        }
+
+            private bool Inside(int x, int y)
         {
             /*
              * Highly inspired by https://stackoverflow.com/a/2049593.

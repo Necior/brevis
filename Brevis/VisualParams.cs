@@ -10,6 +10,9 @@ namespace Brevis
     {
         public readonly Vertex3D camPos;
         public readonly Vertex3D lightPos;
+
+        public readonly bool phong;
+   
         public readonly double k_a = 0.3;
         public readonly double k_d = 0.3;
         public readonly double k_s = 0.3;
@@ -26,10 +29,19 @@ namespace Brevis
         public readonly double i_sR = 0xff;
         public readonly double i_sG = 0x00;
         public readonly double i_sB = 0x00;
-        public VisualParams(Vertex3D camPos, Vertex3D lightPos)
+        public readonly PixelColor[,] pixels;
+        
+        public readonly String colorMode; /* One of: "COLOR", "TEXTURE", "RANDOM" */
+        /* Did I hear someone saying ENUM? */
+        public readonly int defaultColor;
+        public VisualParams(Vertex3D camPos, Vertex3D lightPos, PixelColor[,] pixels)
         {
             this.camPos = camPos;
             this.lightPos = lightPos;
+            this.pixels = pixels;
+            this.colorMode = "COLOR";
+            this.defaultColor = Const.Color.blue;
+            this.phong = true;
         }
     }
 }

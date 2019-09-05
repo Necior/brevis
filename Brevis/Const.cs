@@ -12,6 +12,7 @@ namespace Brevis
         {
             static public int black = 0x000000;
             static public int white = 0xffffff;
+            static public int blue = 0x0000ff;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Brevis
         private Vector3D lookAtVersor;
         private Vector3D camUpVersor;
         private readonly OFFParser offParser;
+        private readonly PixelColor[,] pixels;
 
         private Vertex3D camTarget => camPos.Add(lookAtVersor);
 
@@ -36,11 +37,13 @@ namespace Brevis
             this._scene = new Scene(bitmap, Const.Color.black);
             /*
              * First command line argument must be a path to the OFF file.
+             * Second command line argument must be a path to the texture.
              */
             offParser = new OFFParser(Environment.GetCommandLineArgs()[1]);
+            pixels = Utils.GetPixels(new BitmapImage(new Uri(Environment.GetCommandLineArgs()[2])));
 
             ResetScene();
-            Redraw(); /* Initial render sound like a good idea, let's do it. */
+            Redraw(); /* Initial render sounds like a good idea, let's do it. */
         }
 
         private void Redraw()
@@ -53,7 +56,7 @@ namespace Brevis
             foreach (var triangle3D in offParser.Triangles)
             {
                 if(Vector3D.DotProduct(triangle3D.a - camPos, triangle3D.normal) >= 0) /* Backface culling, yay! */
-                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, new VisualParams(camPos, lightPos));
+                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, new VisualParams(camPos, lightPos, pixels));
             }
             this._scene.EndDrawing();
 
