@@ -69,7 +69,7 @@ namespace Brevis
 
         private Matrix GetProjectionMatrix()
         {
-            var perspectiveProjectionMatrix = Matrix.PerspectiveProjectionMatrix(0.01, 1);
+            var perspectiveProjectionMatrix = Matrix.PerspectiveProjectionMatrix(0.0001, 100);
             var viewMatrix = Matrix.ViewMatrix(
                 camPos.x, camPos.y, camPos.z,
                 camTarget.x, camTarget.y, camTarget.z,

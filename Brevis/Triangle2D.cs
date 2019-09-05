@@ -171,10 +171,9 @@ namespace Brevis
             /*
              * Highly inspired by https://stackoverflow.com/a/2049593.
              */
-            Vertex2D pt = new Vertex2D(x, y);
-            var d1 = (pt.X - _b.X) * (_a.Y - _b.Y) - (_a.X - _b.X) * (pt.Y - _b.Y);
-            var d2 = (pt.X - _c.X) * (_b.Y - _c.Y) - (_b.X - _c.X) * (pt.Y - _c.Y);
-            var d3 = (pt.X - _a.X) * (_c.Y - _a.Y) - (_c.X - _a.X) * (pt.Y - _a.Y);
+            var d1 = (x - _b.X) * (_a.Y - _b.Y) - (_a.X - _b.X) * (y - _b.Y);
+            var d2 = (x - _c.X) * (_b.Y - _c.Y) - (_b.X - _c.X) * (y - _c.Y);
+            var d3 = (x - _a.X) * (_c.Y - _a.Y) - (_c.X - _a.X) * (y - _a.Y);
 
             return !(((d1 < 0) || (d2 < 0) || (d3 < 0)) && ((d1 > 0) || (d2 > 0) || (d3 > 0)));
         }
