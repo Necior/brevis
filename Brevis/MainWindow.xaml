@@ -12,11 +12,11 @@
         >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="256" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="256" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Image
@@ -25,6 +25,45 @@
             Grid.Column="0"
             Stretch="None"
             />
-        <Label Grid.Row="0" Grid.Column="1" Name="FpsLabel" />
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Label Name="FpsLabel" />
+
+            <Label Content="Rendering mode" FontWeight="Bold" />
+            <RadioButton Name="uiWFModeWireframe" Content="Wireframe" GroupName="WFMode" IsChecked="True" Checked="SettingsChanged" />
+            <RadioButton Content="Filled" GroupName="WFMode" Checked="SettingsChanged" />
+
+            <Label Content="Color mode" FontWeight="Bold" />
+            <RadioButton Name="uiColorModeRandom" GroupName="colorMode" Content="Random colors" Checked="SettingsChanged" />
+            <RadioButton Name="uiColorModeTexture" GroupName="colorMode" Content="Texture" Checked="SettingsChanged" />
+            <RadioButton Name="uiColorModeColor" GroupName="colorMode" Content="Color" IsChecked="True" Checked="SettingsChanged" />
+            <CheckBox Name="uiFog" Content="Fog" Checked="SettingsChanged" Unchecked="SettingsChanged" />
+            <Label Content="Fog color" FontWeight="Bold" />
+            <Slider Name="fogR" Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Name="fogG" Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Name="fogB" Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <CheckBox Name="uiTransparency" Content="Transparency" Checked="SettingsChanged" Unchecked="SettingsChanged" />
+            <Label Content="# of transparent triangles" FontWeight="Bold" />
+            <Slider Minimum="0" Maximum="50000" TickFrequency="1" ValueChanged="SettingsChanged" />
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            <Label Content="Light position" FontWeight="Bold" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Label Content="Ambient color" FontWeight="Bold" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Label Content="Diffuse color" FontWeight="Bold" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Label Content="Specular color" FontWeight="Bold" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Label Content="Specular alpha" FontWeight="Bold" />
+            <Slider Minimum="1" Maximum="10" ValueChanged="SettingsChanged" />
+        </StackPanel>
     </Grid>
 </Window>

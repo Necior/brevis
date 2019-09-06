@@ -28,7 +28,10 @@ namespace Brevis
 
         public void Draw(IHasSetPixel canvas, VisualParams vp)
         {
-            this.DrawMesh(canvas, vp);
+            if(vp.wireframe)
+                this.DrawWireframe(canvas, Const.Color.white);
+            else
+                this.DrawMesh(canvas, vp);
         }
 
         private void DrawMesh(IHasSetPixel canvas, VisualParams vp)

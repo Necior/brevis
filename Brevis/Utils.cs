@@ -50,5 +50,10 @@ namespace Brevis
                         Alpha = pixelBytes[(y * width + x) * 4 + 3],
                     };
         }
+
+        public static int RGB2Color(double r, double g, double b)
+        {
+            return (((int) r) << 16) + (((int) g) << 8) + (int) b;
+        }
     }
 }

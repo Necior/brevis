@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,12 +26,15 @@ namespace Brevis
         private Vector3D lookAtVersor;
         private Vector3D camUpVersor;
         private readonly OFFParser offParser;
-        private readonly PixelColor[,] pixels;
+        private readonly PixelColor[,] texturePixels;
+        private VisualParams visualParams;
+        private bool initialized;
 
         private Vertex3D camTarget => camPos.Add(lookAtVersor);
 
         public MainWindow()
         {
+            initialized = false;
             InitializeComponent();
             var bitmap = new WriteableBitmap(256, 256, 96, 96, PixelFormats.Bgr32, null);
             this.SceneImage.Source = bitmap;
@@ -40,17 +44,21 @@ namespace Brevis
              * Second command line argument must be a path to the texture.
              */
             offParser = new OFFParser(Environment.GetCommandLineArgs()[1]);
-            pixels = Utils.GetPixels(new BitmapImage(new Uri(Environment.GetCommandLineArgs()[2])));
-            offParser.MakeTransparent(30); /* TODO: add this parameter to the UI. */
+            texturePixels = Utils.GetPixels(new BitmapImage(new Uri(Environment.GetCommandLineArgs()[2])));
+            visualParams = new VisualParams(camPos, lightPos, texturePixels);
 
             ResetScene();
+            SetVP();
+            initialized = true;
             Redraw(); /* Initial render sounds like a good idea, let's do it. */
         }
 
         private void Redraw()
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            var vp = new VisualParams(camPos, lightPos, pixels);
+            
+            visualParams.camPos = camPos;
+            visualParams.lightPos = lightPos;
 
             var projectionMatrix = this.GetProjectionMatrix();
             this._scene.ResetZbuffer();
@@ -58,14 +66,16 @@ namespace Brevis
             foreach (var triangle3D in offParser.Triangles)
             {
                 if (Vector3D.DotProduct(triangle3D.a - camPos, triangle3D.normal) >= 0) /* Backface culling, yay! */
-                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, vp);
+                    triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, visualParams);
             }
-            this._scene.EndDrawing(vp.transparencyMode);
+            this._scene.EndDrawing(visualParams.transparencyMode);
 
             watch.Stop();
             var fps = 1000 / watch.ElapsedMilliseconds;
-            this.FpsLabel.Content = $"It took {watch.ElapsedMilliseconds} ms to generate a frame. FPS at this speed: {fps}";
+            this.FpsLabel.Content = $"{watch.ElapsedMilliseconds} ms ({fps} FPS)";
         }
+
+        
 
         private Matrix GetProjectionMatrix()
         {
@@ -184,6 +194,32 @@ namespace Brevis
             lightPos = new Vertex3D(5, 5, 5);
             lookAtVersor = new Vector3D(0, 0, -1).Normalize();
             camUpVersor = new Vector3D(0, -1, 0).Normalize();
+        }
+
+        private void SettingsChanged(object sender, RoutedEventArgs e)
+        {
+            if(initialized)
+                SetVP();
+        }
+
+        private void SetVP()
+        {
+            visualParams.transparencyMode = uiTransparency.IsChecked.GetValueOrDefault(false);
+            visualParams.wireframe = uiWFModeWireframe.IsChecked.GetValueOrDefault(false);
+            if (uiColorModeColor.IsChecked.GetValueOrDefault(false))
+                visualParams.colorMode = "COLOR";
+            else if (uiColorModeRandom.IsChecked.GetValueOrDefault(false))
+                visualParams.colorMode = "RANDOM";
+            else
+                visualParams.colorMode = "TEXTURE";
+            uiFog.IsEnabled = !visualParams.wireframe;
+            fogR.IsEnabled = !visualParams.wireframe;
+            fogG.IsEnabled = !visualParams.wireframe;
+            fogB.IsEnabled = !visualParams.wireframe;
+            visualParams.fog = uiFog.IsChecked.GetValueOrDefault(false);
+            visualParams.fogColor = Utils.RGB2Color(fogR.Value, fogG.Value, fogB.Value);
+            offParser.MakeTransparent(30); /* TODO: add this parameter to the UI. */
+            Redraw();
         }
     }
 }
