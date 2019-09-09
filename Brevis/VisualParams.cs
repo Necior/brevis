@@ -17,9 +17,9 @@ namespace Brevis
 
         public bool transparencyMode;
    
-        public double k_a = 1;
-        public double k_d = 1;
-        public double k_s = 1;
+        public double k_a = 0.5;
+        public double k_d = 0.5;
+        public double k_s = 0.5;
         public double specularAlpha = 5;
 
         public int i_aR = 0xff;

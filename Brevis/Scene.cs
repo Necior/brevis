@@ -58,7 +58,7 @@ namespace Brevis
             if (transparent)
             {
                 Clear();
-                pixelsQueue.Sort((t1, t2) => t1.Item3.CompareTo(t2.Item3));
+                pixelsQueue.Sort((t1, t2) => t2.Item3.CompareTo(t1.Item3));
                 foreach (var p in pixelsQueue)
                 {
                     if (p.Item5)
