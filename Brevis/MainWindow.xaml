@@ -32,6 +32,8 @@
             <RadioButton Name="uiWFModeWireframe" Content="Wireframe" GroupName="WFMode" IsChecked="True" Checked="SettingsChanged" />
             <RadioButton Content="Filled" GroupName="WFMode" Checked="SettingsChanged" />
 
+            <CheckBox Name="uiBC" Content="Backface culling" Checked="SettingsChanged" Unchecked="SettingsChanged" />
+
             <Label Content="Color mode" FontWeight="Bold" />
             <RadioButton Name="uiColorModeRandom" GroupName="colorMode" Content="Random colors" Checked="SettingsChanged" />
             <RadioButton Name="uiColorModeTexture" GroupName="colorMode" Content="Texture" Checked="SettingsChanged" />

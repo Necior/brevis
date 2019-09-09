@@ -13,6 +13,7 @@ namespace Brevis
 
         public bool phong;
         public bool fog;
+        public bool bc;
         public int fogColor;
 
         public bool transparencyMode;

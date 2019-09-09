@@ -65,7 +65,7 @@ namespace Brevis
             this._scene.StartDrawing();
             foreach (var triangle3D in offParser.Triangles)
             {
-                if (Vector3D.DotProduct(triangle3D.a - camPos, triangle3D.normal) >= 0) /* Backface culling, yay! */
+                if (!visualParams.bc || Vector3D.DotProduct(triangle3D.a - camPos, triangle3D.normal) >= 0) /* Backface culling, yay! */
                     triangle3D.PerspectiveProjection(projectionMatrix).Draw(this._scene, visualParams);
             }
             this._scene.EndDrawing(visualParams.transparencyMode);
@@ -236,6 +236,7 @@ namespace Brevis
             visualParams.specularAlpha = uiSpecularAlpha.Value;
 
             visualParams.phong = uiPhong.IsChecked.GetValueOrDefault(false);
+            visualParams.bc = uiBC.IsChecked.GetValueOrDefault(false);
 
             Redraw();
         }
