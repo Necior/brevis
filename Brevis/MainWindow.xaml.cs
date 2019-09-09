@@ -219,7 +219,7 @@ namespace Brevis
             fogB.IsEnabled = !visualParams.wireframe;
             visualParams.fog = uiFog.IsChecked.GetValueOrDefault(false);
             visualParams.fogColor = Utils.RGB2Color(fogR.Value, fogG.Value, fogB.Value);
-            offParser.MakeTransparent((int)uiTransparentCount.Value);
+            offParser.MakeTransparent(uiTransparentCount.Value);
             lightPos = new Vertex3D(uiLightX.Value, uiLightY.Value, uiLightZ.Value);
 
             visualParams.i_aR = (int)uiAmbientR.Value;

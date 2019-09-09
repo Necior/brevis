@@ -43,7 +43,7 @@
             <Slider Name="fogB" Minimum="0" Maximum="255" TickFrequency="1" ValueChanged="SettingsChanged" />
             <CheckBox Name="uiTransparency" Content="Transparency" Checked="SettingsChanged" Unchecked="SettingsChanged" />
             <Label Content="# of transparent triangles (0 - 50000)" FontWeight="Bold" />
-            <Slider Name="uiTransparentCount" Minimum="0" Maximum="50000" TickFrequency="1" ValueChanged="SettingsChanged" />
+            <Slider Name="uiTransparentCount" Minimum="0" Maximum="1" ValueChanged="SettingsChanged" />
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="2">
             <CheckBox Name="uiPhong" Content="Phong" Checked="SettingsChanged" Unchecked="SettingsChanged" />

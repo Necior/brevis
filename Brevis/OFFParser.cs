@@ -105,5 +105,13 @@ namespace Brevis
                 triangle.SetTransparent(count++ < n);
             }
         }
+
+        public void MakeTransparent(double ratio)
+        {
+            /*
+             * ratio must be in [0, 1]
+             */
+            MakeTransparent((int)(Triangles.Count * ratio));
+        }
     }
 }
