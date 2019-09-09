@@ -127,6 +127,7 @@ namespace Brevis
                     break;
             }
             Redraw();
+            e.Handled = true;
         }
 
         private void MoveLeft(double stepSize)
@@ -218,7 +219,24 @@ namespace Brevis
             fogB.IsEnabled = !visualParams.wireframe;
             visualParams.fog = uiFog.IsChecked.GetValueOrDefault(false);
             visualParams.fogColor = Utils.RGB2Color(fogR.Value, fogG.Value, fogB.Value);
-            offParser.MakeTransparent(30); /* TODO: add this parameter to the UI. */
+            offParser.MakeTransparent((int)uiTransparentCount.Value);
+            lightPos = new Vertex3D(uiLightX.Value, uiLightY.Value, uiLightZ.Value);
+
+            visualParams.i_aR = (int)uiAmbientR.Value;
+            visualParams.i_aG = (int)uiAmbientG.Value;
+            visualParams.i_aB = (int)uiAmbientB.Value;
+
+            visualParams.i_dR = (int)uiDiffuseR.Value;
+            visualParams.i_dG = (int)uiDiffuseG.Value;
+            visualParams.i_dB = (int)uiDiffuseB.Value;
+
+            visualParams.i_sR = (int)uiSpecularR.Value;
+            visualParams.i_sG = (int)uiSpecularG.Value;
+            visualParams.i_sB = (int)uiSpecularB.Value;
+            visualParams.specularAlpha = uiSpecularAlpha.Value;
+
+            visualParams.phong = uiPhong.IsChecked.GetValueOrDefault(false);
+
             Redraw();
         }
     }

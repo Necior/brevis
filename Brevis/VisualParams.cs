@@ -17,22 +17,22 @@ namespace Brevis
 
         public bool transparencyMode;
    
-        public double k_a = 0.3;
-        public double k_d = 0.3;
-        public double k_s = 0.3;
+        public double k_a = 1;
+        public double k_d = 1;
+        public double k_s = 1;
         public double specularAlpha = 5;
 
-        public double i_aR = 0xff;
-        public double i_aG = 0xff;
-        public double i_aB = 0xff;
+        public int i_aR = 0xff;
+        public int i_aG = 0xff;
+        public int i_aB = 0xff;
 
-        public double i_dR = 0x00;
-        public double i_dG = 0xff;
-        public double i_dB = 0x00;
+        public int i_dR = 0x00;
+        public int i_dG = 0xff;
+        public int i_dB = 0x00;
 
-        public double i_sR = 0xff;
-        public double i_sG = 0x00;
-        public double i_sB = 0x00;
+        public int i_sR = 0xff;
+        public int i_sG = 0x00;
+        public int i_sB = 0x00;
         public PixelColor[,] pixels;
         public bool wireframe;
         
