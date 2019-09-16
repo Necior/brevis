@@ -6,6 +6,8 @@ Tiny 3D app for previewing OFF files.
 I was learning the topic od 3D graphics while developing this app and I cut corners _a lot_.
 Expect weirdly names variables, code duplication, dead code, useless computations, lack of UI, wrongly implemented algorithms and more.
 
+![Example: render of a teapot](example.png)
+
 ## Features
 
 * Load simple (not all) OFF files (examples at https://people.mpi-inf.mpg.de/~kettner/proj/obj3d/index.html);
