@@ -1,6 +1,6 @@
 # brevis
 
-Tiny 3D app for previewing OFF files.
+brevis ("short", "small" or "brief" in Latin) – tiny 3D app for previewing OFF files.
 
 **Note**: The code is ugly, unmaintanable or probably not understandable by anyone other than the author-at-the-time-of-coding.
 I was learning the topic od 3D graphics while developing this app and I cut corners _a lot_.
