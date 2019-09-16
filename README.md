@@ -4,7 +4,7 @@ brevis ("short", "small" or "brief" in Latin) – tiny 3D app for previewing OFF
 
 **Note**: The code is ugly, unmaintanable or probably not understandable by anyone other than the author-at-the-time-of-coding.
 I was learning the topic od 3D graphics while developing this app and I cut corners _a lot_.
-Expect weirdly names variables, code duplication, dead code, useless computations, lack of UI, wrongly implemented algorithms and more.
+Expect weirdly named variables, code duplication, dead code, useless computations, lack of UI, wrongly implemented algorithms and more.
 
 ![Example: render of a teapot](example.png)
 
